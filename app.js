@@ -38,6 +38,12 @@ app.get("/crash-test", () => {
   }, 0);
 });
 
+//stop the application from trying to serve a favicon (which causes unnecessary 404 errors in the logs)
+app.get("/favicon.ico", (req, res) => res.status(204).end());
+app.get("/.well-known/appspecific/com.chrome.devtools.json", (req, res) =>
+  res.status(204).end()
+);
+
 // ----------------------
 // 🔹 Main application routes
 // ----------------------

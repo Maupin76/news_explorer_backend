@@ -4,6 +4,9 @@ const { createUser, login } = require("../controllers/users");
 const { getItems } = require("../controllers/clothingItems");
 const auth = require("../middlewares/auth");
 
+// News controller news-api route ****************************
+const { getNewsByKeyword } = require("../controllers/news");
+
 const {
   validateUserBody,
   validateLoginBody,
@@ -16,6 +19,9 @@ const itemRouter = require("./items");
 router.post("/signin", validateLoginBody, login);
 router.post("/signup", validateUserBody, createUser);
 router.get("/items", getItems);
+
+// News API test route ****************************
+router.get("/news", getNewsByKeyword);
 
 router.get("/news-test", (req, res) => {
   res.json({ message: "News Explorer backend is working" });
