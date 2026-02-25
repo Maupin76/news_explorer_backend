@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const articleRouter = require("./articles");
 
 const { createUser, login } = require("../controllers/users");
 const { getItems } = require("../controllers/clothingItems");
@@ -21,14 +22,18 @@ router.post("/signup", validateUserBody, createUser);
 router.get("/items", getItems);
 
 // News API test route ****************************
+
 router.get("/news", getNewsByKeyword);
 
-router.get("/news-test", (req, res) => {
-  res.json({ message: "News Explorer backend is working" });
-});
+// router.get("/news-test", (req, res) => {
+//   res.json({ message: "News Explorer backend is working" });
+// });
 
 // Everything below this line requires a valid JWT
+
 router.use(auth);
+
+router.use("/articles", articleRouter);
 
 router.use("/users", userRouter);
 router.use("/items", itemRouter);
