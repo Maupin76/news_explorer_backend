@@ -67,10 +67,10 @@ const getCurrentUser = (req, res, next) => {
 
 // POST /signup
 const createUser = (req, res, next) => {
-  const { name, avatar, email, password } = req.body;
+  const { name, email, password } = req.body;
 
   hashPassword(password)
-    .then((hashed) => User.create({ name, avatar, email, password: hashed }))
+    .then((hashed) => User.create({ name, email, password: hashed }))
     .then((user) => {
       const userObj = user.toObject();
       delete userObj.password;
@@ -115,11 +115,11 @@ const login = (req, res, next) => {
 
 // PATCH /users/me
 const updateCurrentUser = (req, res, next) => {
-  const { name, avatar } = req.body;
+  const { name } = req.body;
 
   User.findByIdAndUpdate(
     req.user._id,
-    { name, avatar },
+    { name },
     { new: true, runValidators: true }
   )
     .orFail()
