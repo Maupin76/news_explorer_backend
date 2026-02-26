@@ -13,7 +13,6 @@ const createArticle = async (req, res, next) => {
       link,
       image,
       owner: req.user._id,
-      // owner: "507f191e810c19729de860ea", // temporary fake ObjectId
     });
 
     res.status(201).json(article);

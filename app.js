@@ -28,10 +28,6 @@ app.use(express.json());
 // ----------------------
 app.use(requestLogger);
 
-// --------------------------------------------------
-// 🔥 Sprint 15 REQUIRED: Crash-Test Route
-// (Must be BEFORE /signin and /signup routes)
-// --------------------------------------------------
 app.get("/crash-test", () => {
   setTimeout(() => {
     throw new Error("Server will crash now");

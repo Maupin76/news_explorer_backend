@@ -21,9 +21,6 @@ const getNewsByKeyword = async (req, res, next) => {
   try {
     const { keyword } = req.query;
 
-    // console.log("KEYWORD:", keyword);
-    // console.log("API KEY PRESENT:", !!process.env.NEWS_API_KEY);
-
     if (!keyword) {
       return res.status(400).json({ message: "Keyword is required" });
     }
