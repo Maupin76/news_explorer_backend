@@ -1,155 +1,143 @@
-# 🧥 WTWR (What to Wear?) — Backend
+📰 News Explorer — Backend
 
-This repository contains the backend for the WTWR (What to Wear?) full-stack application.  
-It provides API endpoints for user authentication, clothing item management, likes, and user profile updates.
+This repository contains the backend for the News Explorer full-stack application.
 
-The backend is deployed on a Google Cloud Compute Engine virtual machine using PM2 and nginx as a reverse proxy.
+The backend provides secure authentication and per-user article persistence using MongoDB and JWT.
 
----
+🚀 Overview
 
-## 🌐 Deployed API Domain
+News Explorer allows users to:
 
-**Backend API (production):**
+Register and log in securely
 
-http://api.recwtwr.jumpingcrab.com
+Search real-time news (handled by frontend API integration)
 
-All API routes (sign up, sign in, CRUD operations, likes, and user profile updates) are available under this domain.
+Save articles to their personal account
 
-**Example request:**
+View their saved articles
 
-GET http://api.recwtwr.jumpingcrab.com/items
+Delete saved articles
 
----
+Each user only sees and manages their own saved articles.
 
-## 🎨 Frontend Repository
+🛠 Technologies Used
+Backend Stack
 
-The GitHub repository for the frontend application:
+Node.js
 
-https://github.com/DouglasMaupin11/se_project_react
+Express.js
 
----
+MongoDB / Mongoose
 
-## 🌍 Deployed Frontend Domain
+Celebrate / Joi (request validation)
 
-**Frontend (production):**
+Custom error classes
 
-http://recwtwr.jumpingcrab.com
+Centralized error handling middleware
 
-The frontend communicates with the backend API through a dedicated API subdomain.
+CORS
 
----
+JWT authentication (custom HS256 implementation)
 
-## 🎥 Project Pitch Video
+Password hashing using Node crypto.scrypt
 
-👉 Project Pitch Video: https://youtu.be/nh7VEFq4lic
+🔐 Authentication Flow
+Sign Up
 
-This video demonstrates:
+POST /signup
 
-- Deployed frontend
-- Deployed backend
-- User sign up and sign in
-- Adding and deleting clothing items
-- Liking and unliking items
-- Crash-test endpoint
-- nginx reverse proxy
-- PM2 auto-restart behavior
+Validates request body
 
----
+Hashes password using scrypt
 
-## 🚀 Technologies Used
+Stores user in MongoDB
 
-### Backend
+Sign In
 
-- Node.js
-- Express.js
-- MongoDB / Mongoose
-- Celebrate / Joi / Validator
-- Winston logging (request and error loggers)
-- Centralized error handling
-- Custom error classes
-- CORS
-- JSON Web Tokens (JWT)
+POST /signin
 
-### Deployment
+Validates credentials
 
-- Google Cloud Compute Engine VM
-- PM2 (process manager and auto-restart)
-- nginx reverse proxy
-- Environment variables for production secrets
+Generates JWT
 
----
+Returns token to client
 
-## 🛠 Crash Test Endpoint
+Protected Routes
 
-For code review purposes only:
+All article routes require a valid JWT.
+The authentication middleware verifies the token and attaches req.user.
 
-GET /crash-test
-
-This endpoint intentionally crashes the server.  
-PM2 automatically restarts the application and restores functionality.
-
----
-
-## ⚙️ Environment Variables
-
-Used on the server only (.env file, not committed):
-
-NODE_ENV=production  
-JWT_SECRET=your-strong-production-secret
-
----
-
-## 📁 Project Structure
-
-se_project_express/
+📡 API Endpoints
+Auth
+POST /signup
+POST /signin
+Users
+GET /users/me
+Articles (Protected)
+GET /articles
+POST /articles
+DELETE /articles/:id
+📁 Project Structure
+news_explorer_backend/
 │
 ├── app.js
 ├── controllers/
-├── middlewares/
-│ ├── error-handler.js
-│ ├── logger.js
-│ └── validation.js
+│ ├── users.js
+│ └── articles.js
 ├── models/
+│ ├── user.js
+│ └── article.js
 ├── routes/
+├── middlewares/
+│ ├── auth.js
+│ ├── error-handler.js
+│ └── validation.js
 ├── utils/
+│ ├── config.js
 │ └── errors/
-│ ├── BadRequestError.js
-│ ├── UnauthorizedError.js
-│ ├── ForbiddenError.js
-│ ├── NotFoundError.js
-│ ├── ConflictError.js
-│ ├── InternalServerError.js
-│ └── index.js
-├── .env (production only, not committed)
 └── README.md
+⚙️ Environment Variables
 
----
+Create a .env file (not committed):
 
-## 🧪 How to Run Locally
+PORT=3001
+NODE_ENV=development
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_secret_key
+🧪 Running Locally
 
-1. Install dependencies  
-   npm install
+Install dependencies
 
-2. Create a .env file  
-   NODE_ENV=development  
-   JWT_SECRET=dev-secret
+npm install
 
-3. Start MongoDB  
-   Ensure MongoDB is running locally.
+Make sure MongoDB is running locally.
 
-4. Run the server  
-   npm run start
+Start the server
 
-   or with nodemon:  
-   npm run dev
+npm run dev
 
----
+or
 
-## ✅ Notes for Reviewers
+npm start
 
-- All request validation is handled with Celebrate/Joi middleware
-- All errors are thrown using custom error classes
-- Controllers do not send error responses directly
-- Centralized error handler processes all errors
-- PM2 ensures automatic recovery after crashes
-- nginx proxies client traffic to the Express application
+Server runs on:
+
+http://localhost:3001
+🧹 Project Notes
+
+This backend was adapted from a previous project.
+All unrelated models, routes, and item logic have been removed.
+
+The codebase now strictly supports News Explorer functionality.
+
+📌 Future Improvements
+
+Token expiration and refresh flow
+
+Pagination for saved articles
+
+Rate limiting for security
+
+Production deployment configuration
+
+Enhanced logging strategy
