@@ -1,6 +1,7 @@
 const crypto = require("crypto");
 const { JWT_SECRET } = require("../utils/config");
 const { UnauthorizedError } = require("../utils/errors");
+const { errorLogger } = require("./logger");
 
 // base64url > Buffer
 const b64urlToBuffer = (str) => {
@@ -53,7 +54,7 @@ module.exports = (req, res, next) => {
     const payload = verifyJWT(token, JWT_SECRET);
     req.user = payload;
   } catch (err) {
-    console.error(err.message); // allowed by ESLint rule
+    errorLogger.error(err.message); // allowed by ESLint rule
     return next(new UnauthorizedError("Authorization Required"));
   }
 

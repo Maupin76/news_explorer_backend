@@ -18,7 +18,7 @@ const { PORT = 3001 } = process.env;
 // ----------------------
 mongoose
   .connect("mongodb://127.0.0.1:27017/news_explorer_db")
-  .catch((err) => console.error(err));
+  .catch((err) => errorLogger.error(err));
 
 app.use(cors());
 app.use(express.json());
@@ -34,7 +34,7 @@ app.get("/crash-test", () => {
   }, 0);
 });
 
-//stop the application from trying to serve a favicon (which causes unnecessary 404 errors in the logs)
+// stop the application from trying to serve a favicon (which causes unnecessary 404 errors in the logs)
 app.get("/favicon.ico", (req, res) => res.status(204).end());
 app.get("/.well-known/appspecific/com.chrome.devtools.json", (req, res) =>
   res.status(204).end()
@@ -71,5 +71,5 @@ app.use(errorHandler);
 // 🔹 Start server
 // ----------------------
 app.listen(PORT, () => {
-  console.log(`App listening on port ${PORT}`);
+  requestLogger.info(`App listening on port ${PORT}`);
 });

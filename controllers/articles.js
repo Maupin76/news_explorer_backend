@@ -15,30 +15,20 @@ const createArticle = async (req, res, next) => {
       owner: req.user._id,
     });
 
-    res.status(201).json(article);
+    return res.status(201).json(article);
   } catch (err) {
-    next(err);
+    return next(err);
   }
 };
 
 const getArticles = async (req, res, next) => {
   try {
     const articles = await Article.find({ owner: req.user._id });
-    res.json(articles);
+    return res.json(articles);
   } catch (err) {
-    next(err);
+    return next(err);
   }
 };
-
-// const deleteArticle = async (req, res, next) => {
-//   try {
-//     const { id } = req.params;
-//     await Article.findByIdAndDelete(id);
-//     res.json({ message: "Article deleted" });
-//   } catch (err) {
-//     next(err);
-//   }
-// };
 
 const deleteArticle = async (req, res, next) => {
   try {
@@ -55,9 +45,9 @@ const deleteArticle = async (req, res, next) => {
         .json({ message: "Article not found or not authorized" });
     }
 
-    res.json({ message: "Article deleted" });
+    return res.json({ message: "Article deleted" });
   } catch (err) {
-    next(err);
+    return next(err);
   }
 };
 module.exports = { createArticle, getArticles, deleteArticle };
