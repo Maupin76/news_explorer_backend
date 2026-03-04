@@ -18,7 +18,7 @@ const { PORT = 3001 } = process.env;
 // ----------------------
 mongoose
   .connect("mongodb://127.0.0.1:27017/news_explorer_db")
-  .catch((err) => errorLogger.error(err));
+  .catch((err) => console.error(err));
 
 // app.use(cors());
 const allowedOrigins = [
