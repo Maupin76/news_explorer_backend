@@ -20,7 +20,21 @@ mongoose
   .connect("mongodb://127.0.0.1:27017/news_explorer_db")
   .catch((err) => errorLogger.error(err));
 
-app.use(cors());
+// app.use(cors());
+const allowedOrigins = [
+  "https://news.douglasmaupin.com",
+  "https://api.news.douglasmaupin.com",
+  "http://localhost:3000",
+];
+
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+  })
+);
+
+app.options("*", cors());
 app.use(express.json());
 
 // ----------------------
