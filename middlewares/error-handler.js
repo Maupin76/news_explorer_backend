@@ -2,7 +2,7 @@ const { errorLogger } = require("./logger");
 // Centralized error-handling middleware
 module.exports = (err, req, res, next) => {
   // Always log full error for debugging
-  errorLogger.error(err);
+  console.error(err);
 
   const { statusCode = 500, message } = err;
 
