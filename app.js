@@ -85,6 +85,7 @@ app.use(errorHandler);
 // ----------------------
 // 🔹 Start server
 // ----------------------
+// eslint-disable-next-line no-console
 app.listen(PORT, () => {
-  requestLogger.info(`App listening on port ${PORT}`);
+  console.log(`App listening on port ${PORT}`);
 });
