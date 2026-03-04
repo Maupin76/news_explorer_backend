@@ -18,7 +18,8 @@ const { PORT = 3001 } = process.env;
 // ----------------------
 mongoose
   .connect("mongodb://127.0.0.1:27017/news_explorer_db")
-  .catch((err) => console.error(err));
+  // eslint-disable-next-line no-console
+  .catch((err) => console.error("MongoDB connection error:", err));
 
 // app.use(cors());
 const allowedOrigins = [
